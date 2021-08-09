@@ -1,0 +1,48 @@
+[
+  {
+    "isRequired": 1,
+    "userValue": "P序列",
+    "optionValue": [
+      "M序列",
+      "P序列"
+    ],
+    "elementLabel": "开始",
+    "controlId": 4788,
+    "elementType": "radio",
+    "isSupportExtended": -1,
+    "elementName": "new_property_4",
+    "validate": true
+  },
+  {
+    "isRequired": 1,
+    "userValue": "13298$personCust贾伟松 - 销售部",
+    "isDepentdent": "1",
+    "elementLabel": "离职人员姓名",
+    "isShowPerformance": "1",
+    "inputType": "1",
+    "elementType": "person_cust",
+    "isSupportExtended": -1,
+    "customerName": "贾伟松 - 销售部",
+    "elementName": "person_cust_84f8ad24a1544438b01df61f44f16485",
+    "validate": true
+  },
+  {
+    "isRequired": 1,
+    "userValue": "2020-01-01",
+    "elementLabel": "离职日期",
+    "elementType": "date_picker",
+    "isSupportExtended": -1,
+    "isSupportTime": "-1",
+    "elementName": "date_picker_3f6f70f899b84b079ed499ea04647432",
+    "validate": true
+  },
+  {
+    "isRequired": 1,
+    "userValue": "做不下去了，主要是来深圳以为是有小熊的资料让我们去跑，有一定的方法，但是来了之后，人员都是新调过来的，划区，无目的，无规划的陌拜。 刚开始很有激情，但是后来激情消散，是绝对不会来公司混底薪的。",
+    "elementLabel": "离职原因",
+    "elementType": "textarea",
+    "isSupportExtended": -1,
+    "elementName": "textarea_2a107d4e725f4b449e26baad90f971c2",
+    "validate": true
+  }
+]
