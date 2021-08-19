@@ -8,12 +8,12 @@ mybatis:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/springboot_learn_activiti?serverTimezone=UTC&characterEncoding=utf8&useUnicode=true&useSSL=false
+    url: jdbc:mysql://49.234.25.12:3306/act_learn?serverTimezone=UTC&characterEncoding=utf8&useUnicode=true&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
 #    driver-class-name: com.mysql.jdbc.Driver
     username: root
 #    password: root
-    password: abc
+    password: XIan934792834.
   activiti:
     database-schema-update: true
     check-process-definitions: true
