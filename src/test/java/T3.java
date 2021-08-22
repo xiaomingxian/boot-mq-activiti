@@ -50,17 +50,17 @@ String url ="<p>p</p><p>艰难的时刻你分手多久啊剋加拿大队今年�
 
         String textStr ="";
 
-        java.util.regex.Pattern p_script;
+        Pattern p_script;
 
-        java.util.regex.Matcher m_script;
+        Matcher m_script;
 
-        java.util.regex.Pattern p_style;
+        Pattern p_style;
 
-        java.util.regex.Matcher m_style;
+        Matcher m_style;
 
-        java.util.regex.Pattern p_html;
+        Pattern p_html;
 
-        java.util.regex.Matcher m_html;
+        Matcher m_html;
 
         try{
 

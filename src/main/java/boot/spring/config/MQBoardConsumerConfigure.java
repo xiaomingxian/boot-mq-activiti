@@ -1,14 +1,15 @@
 package boot.spring.config;
 
-import boot.spring.consumer.MQConsumeMsgListenerProcessor;
+import boot.spring.consumer.MQConsumBoardListener;
 import boot.spring.consumer.MQConsumeSequenceListener;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import net.bytebuddy.asm.Advice;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
-import org.apache.rocketmq.client.consumer.MessageSelector;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
+import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,9 @@ import org.springframework.context.annotation.Configuration;
 @Setter
 @ToString
 @Configuration
-@ConfigurationProperties(prefix = "filter.rocketmq.consumer")
-public class MQFilterConsumerConfigure {
-    public static final Logger LOGGER = LoggerFactory.getLogger(MQFilterConsumerConfigure.class);
+@ConfigurationProperties(prefix = "board.rocketmq.consumer")
+public class MQBoardConsumerConfigure {
+    public static final Logger LOGGER = LoggerFactory.getLogger(MQBoardConsumerConfigure.class);
 
     private String groupName;
     private String namesrvAddr;
@@ -39,26 +40,25 @@ public class MQFilterConsumerConfigure {
     private Integer consumeMessageBatchMaxSize;
 
     @Autowired
-    private MQConsumeMsgListenerProcessor consumeMsgListenerProcessor;
-    @Autowired
-    private MQConsumeSequenceListener mqConsumeSequenceListener;
+    private MQConsumeSequenceListener mqConsumBoardListener;
+//    private MQConsumBoardListener mqConsumBoardListener;
+
     /**
      * mq 消费者配置
      * @return
      * @throws MQClientException
      */
     @Bean
-    @ConditionalOnProperty(prefix = "filter.rocketmq.consumer", value = "isOnOff", havingValue = "on")
-    public DefaultMQPushConsumer defaultFilterConsumer() throws MQClientException {
-        LOGGER.info("defaultConsumer 正在创建过滤消费者---------------------------------------");
+    @ConditionalOnProperty(prefix = "board.rocketmq.consumer", value = "isOnOff", havingValue = "on")
+    public DefaultMQPushConsumer boardConsumer() throws MQClientException {
+        LOGGER.info("  正在创建 board 消费者---------------------------------------");
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(groupName);
         consumer.setNamesrvAddr(namesrvAddr);
         consumer.setConsumeThreadMin(consumeThreadMin);
         consumer.setConsumeThreadMax(consumeThreadMax);
         consumer.setConsumeMessageBatchMaxSize(consumeMessageBatchMaxSize);
         // 设置监听
-        //consumer.registerMessageListener(consumeMsgListenerProcessor);//普通消费
-        consumer.registerMessageListener(mqConsumeSequenceListener);//顺序消费
+        consumer.registerMessageListener(mqConsumBoardListener);//顺序消费
 
         /**
          * 设置consumer第一次启动是从队列头部开始还是队列尾部开始
@@ -68,7 +68,8 @@ public class MQFilterConsumerConfigure {
         /**
          * 设置消费模型，集群还是广播，默认为集群
          */
-//        consumer.setMessageModel(MessageModel.CLUSTERING);
+        //广播test
+        consumer.setMessageModel(MessageModel.BROADCASTING);
 
         try {
             // 设置该消费者订阅的主题和tag，如果订阅该主题下的所有tag，则使用*,
@@ -77,15 +78,11 @@ public class MQFilterConsumerConfigure {
                 String[] tagArr = tag.split("~");
                 consumer.subscribe(tagArr[0], tagArr[1]);
             }
-            //测试过滤消息
-            consumer.subscribe("filterTopic", MessageSelector.bySql("TAGS = 'TagA' and num between 2 and 5"));
-
             consumer.start();
-            LOGGER.info("============>>Filterconsumer 创建成功 groupName={}, topics={}, namesrvAddr={}",groupName,topics,namesrvAddr);
+            LOGGER.info(" board consumer 创建成功消费者 groupName={}, topics={}, namesrvAddr={}",groupName,topics,namesrvAddr);
         } catch (MQClientException e) {
-            LOGGER.error("=====>>>Filterconsumer 创建失败!");
+            LOGGER.error(" board consumer 创建失败消费者!",e);
         }
-
         return consumer;
     }
 }

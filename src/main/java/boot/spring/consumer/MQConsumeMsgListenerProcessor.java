@@ -1,4 +1,4 @@
-package boot.spring.config;
+package boot.spring.consumer;
 
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;

@@ -40,7 +40,7 @@ public class MQConsumeSequenceListener implements MessageListenerOrderly {
                 String body = new String(messageExt.getBody(), "utf-8");
                 //JSONObject jsonObject = JSONObject.parseObject(body);
                 //LOGGER.info("MQ消息traceId={},topic={}, tags={}, 消息内容={}",jsonObject.getString("traceId"), topic,tags,body);
-                LOGGER.info("MQ消息,topic={}, tags={}, 消息内容={}", topic,tags,body);
+                LOGGER.info("MQ消息,topic={}, tags={}, 消息内容={},msg:{}", topic,tags,body,messageExt);
 
             }
         } catch (Exception e) {

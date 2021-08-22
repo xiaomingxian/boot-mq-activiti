@@ -64,6 +64,27 @@ public class MQProducerController {
         SendResult sendResult = defaultMQProducer.send(sendMsg);
         LOGGER.info("消息发送响应：" + sendResult.toString());
         return sendResult;
+
+    }
+
+    /**
+     * 发送简单的MQ消息  同步消息
+     *
+     * @param msg
+     * @return
+     */
+    @GetMapping("/send2")
+    public Object send2(String topic,String msg) throws InterruptedException, RemotingException, MQClientException, MQBrokerException {
+        if (StringUtils.isEmpty(msg)) {
+            return "没消息";
+        }
+        LOGGER.info(" 自定义 Topic 发送MQ消息内容：" + msg);
+        Message sendMsg = new Message(topic, "TestTag", msg.getBytes());
+        // 默认3秒超时
+        SendResult sendResult = defaultMQProducer.send(sendMsg);
+        LOGGER.info(" 自定义 Topic 消息发送响应：" + sendResult.toString());
+        return sendResult;
+
     }
 
 
